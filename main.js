@@ -4,12 +4,14 @@
 
 var colors = [0xaeb6ba, 0x00FF00, 0x00FFFF, 0xFFFF00, 0xFF0000];
 var iconCount = 5;
+var iconSize = 53;
 
 var imgs = [];
 var ctx;
 var canvas;
 window.onload = function(){
 	canvas = document.getElementById('canvas');
+	canvas.width = canvas.height =iconCount * iconSize;
 	ctx = canvas.getContext('2d');
 
 	var tasks = [];
