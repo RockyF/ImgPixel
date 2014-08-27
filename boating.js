@@ -35,7 +35,6 @@ function onImgLoaded(){
 			alpha = imgData.data[index + 3];
 			a = 0xFF - imgData.data[index+0];
 			if(alpha > 0){
-				//a = 0xFF - y / (imgData.height - 1) * 0x30;
 				r = (1 - a / 0xFF) * cGround[0] + (a / 0xFF) * cRiver[0];
 				g = (1 - a / 0xFF) * cGround[1] + (a / 0xFF) * cRiver[1];
 				b = (1 - a / 0xFF) * cGround[2] + (a / 0xFF) * cRiver[2];
