@@ -11,7 +11,7 @@ window.onload = function(){
 
 	img = new Image();
 	img.onload = onImgLoaded;
-	img.src = "map2.png";
+	img.src = "map.png";
 };
 
 function onImgLoaded(){
@@ -24,20 +24,21 @@ function onImgLoaded(){
 
 	var imgData = ctx.getImageData(0, 0, img.width, img.height);
 
-	var color = 0x00FF00;
-	var srcR = color >> 16;
-	var srcG = (color >> 8) % 256;
-	var srcB = color % 256;
+	var colorRiver = 0x0d2351;
+	var colorGround = 0xc87600;
+	var cRiver = tranHex2RGBA(colorRiver);
+	var cGround = tranHex2RGBA(colorGround);
 
 	for(var y = 0, ylen = imgData.height; y < ylen; y++) {
 		for (var x = 0, xlen = imgData.width; x < xlen; x++) {
 			index = (y * imgData.width + x) * 4;
 			alpha = imgData.data[index + 3];
+			a = 0xFF - imgData.data[index+0];
 			if(alpha > 0){
 				//a = 0xFF - y / (imgData.height - 1) * 0x30;
-				r = (0xFF - a) * 0 + (a / 0xFF) * srcR;
-				g = (0xFF - a) * 0 + (a / 0xFF) * srcG;
-				b = (0xFF - a) * 0 + (a / 0xFF) * srcB;
+				r = (1 - a / 0xFF) * cGround[0] + (a / 0xFF) * cRiver[0];
+				g = (1 - a / 0xFF) * cGround[1] + (a / 0xFF) * cRiver[1];
+				b = (1 - a / 0xFF) * cGround[2] + (a / 0xFF) * cRiver[2];
 
 				imgData.data[index+0] = r;
 				imgData.data[index+1] = g;
@@ -46,4 +47,11 @@ function onImgLoaded(){
 		}
 	}
 	ctx.putImageData(imgData,0,0);
+}
+function tranHex2RGBA(num){
+	var b = num % 256;
+	var g = (num >> 8) % 256;
+	var r = num >> 16;
+
+	return [r, g, b, 1];
 }
